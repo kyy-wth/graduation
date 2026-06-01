@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Next Chapter — Keyla Safa Nur Zahira Hermawan</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navyDark: '#0B1220',
+                        navyDeep: '#111827',
+                        goldPrimary: '#D4AF37',
+                        goldGlow: '#F3D98B',
+                        ivory: '#F8F4EC',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        display: ['Cinzel', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                        cursive: ['Great Vibes', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Icon Packs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* BASE STYLE OVERRIDES & VIGNETTE LAYER */
+        body {
+            background-color: #0B1220;
+            color: #F8F4EC;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .museum-vignette {
+            background: radial-gradient(circle, #111827 0%, #0B1220 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* GLASSMORPHISM CARDS */
+        .luxury-card {
+            background: rgba(17, 24, 39, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(212, 175, 55, 0.05);
+        }
+
+        .text-glow-gold {
+            text-shadow: 0 0 10px rgba(243, 217, 139, 0.4), 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* SCROLL PROGRESS BAR */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gold-primary);
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* FLOATING MUSIC CONTROLLER */
+        #music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background-color: rgba(17, 24, 39, 0.85);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.8);
+            z-index: 3000;
+            transition: all 0.3s ease;
+        }
+        #music-btn:hover {
+            border-color: #FFD700;
+            color: #FFD700;
+            transform: scale(1.05);
+        }
+        #music-btn.playing i {
+            animation: rotate-disc 4s linear infinite;
+        }
+        @keyframes rotate-disc {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* PRELOADER SILHOUETTE */
+        .silhouette-anim {
+            animation: float-silhouette 4s ease-in-out infinite alternate;
+        }
+        @keyframes float-silhouette {
+            0% { transform: translateY(0); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.1)); }
+            100% { transform: translateY(-15px); filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.4)); }
+        }
+
+        /* WELCOME NAME HANDWRITING SVG ANIMATION */
+        .stroke-name {
+            stroke-dasharray: 800;
+            stroke-dashoffset: 800;
+            animation: drawName 4s cubic-bezier(0.47, 0, 0.745, 0.715) forwards;
+            animation-delay: 1s;
+        }
+        @keyframes drawName {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* SPOTLIGHT GRADIENT EFFECT */
+        .museum-spotlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 450px;
+            background: radial-gradient(circle at top, rgba(243, 217, 139, 0.18) 0%, rgba(243, 217, 139, 0.03) 50%, transparent 75%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 3D INTERACTIVE ROYAL ENVELOPE */
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            height: 200px;
+            background: #111827;
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            cursor: pointer;
+            margin: 40px auto;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 158px solid transparent;
+            border-right: 158px solid transparent;
+            border-top: 100px solid #8C6D1F;
+            transform-origin: top;
+            transition: transform 0.6s ease, z-index 0.2s;
+            z-index: 3;
+        }
+        .envelope-container.opened .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .envelope-front {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 158px solid #0B1220;
+            border-right: 158px solid #0B1220;
+            border-bottom: 110px solid #111827;
+            border-radius: 0 0 4px 4px;
+            z-index: 2;
+        }
+        .wax-seal {
+            position: absolute;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 44px;
+            background: radial-gradient(circle, #8A0819 0%, #4A0E17 100%);
+            border: 2px solid var(--gold-primary);
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-primary);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: bold;
+            z-index: 4;
+            transition: all 0.5s ease;
+        }
+        .envelope-container.opened .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -100px) scale(0.5);
+        }
+
+        /* Slide letter paper up */
+        .letter-paper {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            right: 15px;
+            background-color: #FAF8F5; 
+            color: #1A1A1A;
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 1;
+            transform: translateY(0);
+            max-height: 140px;
+            overflow: hidden;
+            border: 1px solid #ECE3D5;
+        }
+        .letter-content {
+            opacity: 0.3;
+            transition: opacity 0.4s;
+        }
+        .envelope-container.opened .letter-paper {
+            transform: translateY(-190px) rotate(-1deg);
+            z-index: 4;
+            max-height: 450px;
+            height: 380px;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .envelope-container.opened .letter-paper .letter-content {
+            opacity: 1;
+        }
+
+        /* ACCORDION ACCENTS */
+        .museum-accordion {
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+        .acc-item {
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .acc-header {
+            font-family: var(--font-display);
+            transition: color 0.3s;
+        }
+        .acc-header i {
+            transition: transform 0.4s ease;
+            color: var(--gold-primary);
+        }
+        .acc-item.active .acc-header {
+            color: var(--gold-primary);
+        }
+        .acc-item.active .acc-header i {
+            transform: rotate(180deg);
+            color: var(--gold-bright);
+        }
+        .acc-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* TIMELINE SCROLL PATH */
+        .timeline-progress-line {
+            height: 0%;
+            transition: height 0.5s ease-out;
+        }
+
+        /* WAX SEAL CRACK ANIMATION HELPERS */
+        @keyframes seal-shake {
+            0%, 100% { transform: translate(-50%, 0); }
+            20%, 60% { transform: translate(-55%, -2px); }
+            40%, 80% { transform: translate(-45%, 2px); }
+        }
+        .seal-shaking {
+            animation: seal-shake 0.3s ease infinite;
+        }
+
+        /* SCROLL BAR PROGRESS & ANIMATIONS */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--navyDark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-bright);
+        }
+
+        /* NEW HIGH-END COSMIC CONFETTI PHYSICS */
+        @keyframes confettiFall {
+            0% { transform: translateY(-5vh) rotate(0deg) translateX(0); }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(50px); }
+            100% { transform: translateY(105vh) rotate(360deg) translateX(-50px); }
+        }
+        .gold-confetti {
+            position: fixed;
+            z-index: 2500;
+            pointer-events: none;
+            animation: confettiFall linear forwards;
+        }
+
+        /* DRAMATIC FLY-OFF GIFT BOX LID ANIMATION */
+        @keyframes lift-off-lid {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            40% { transform: translateY(-90px) rotate(-25deg); opacity: 0.9; }
+            100% { transform: translateY(200px) rotate(-55deg); opacity: 0; }
+        }
+        .gift-box-container.opened .gift-lid-svg {
+            animation: lift-off-lid 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+    </style>
+</head>
+<body class="selection:bg-[#D4AF37] selection:text-black overflow-hidden">
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div id="scroll-progress" style="width: 0%;"></div>
+
+    <!-- FLOATING MUSIC BUTTON -->
+    <button id="music-btn" class="hidden">
+        <i class="fa-solid fa-music"></i>
+    </button>
+    <audio id="bg-music" loop>
+        <source src="music/graduation.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PRELOADER SYSTEM (Cinematic Entrance) -->
+    <div id="preloader-screen" class="fixed inset-0 bg-navyDark z-[9999] flex flex-col items-center justify-center">
+        <!-- Graceful Graduation Female Silhouette Vector -->
+        <div class="w-48 h-48 mb-6 silhouette-anim">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full">
+                <!-- Outer Glow -->
+                <circle cx="50" cy="45" r="30" fill="none" stroke="rgba(212, 175, 55, 0.1)" stroke-width="4"/>
+                <!-- Graceful silhouette path of graduate female with cap -->
+                <path d="M50,15 L72,25 L50,35 L28,25 Z" fill="#D4AF37"/>
+                <path d="M41,29 L41,45 C41,49 59,49 59,45 L59,29" fill="none" stroke="#D4AF37" stroke-width="3"/>
+                <path d="M50,35 L50,60 L58,68" fill="none" stroke="#D4AF37" stroke-width="2"/>
+                <circle cx="58" cy="68" r="2" fill="#D4AF37"/>
+                <path d="M35,62 C35,52 38,42 45,38 C48,39 52,39 55,38 C62,42 65,52 65,62 C65,72 50,76 50,85 L35,85 Z" fill="rgba(212, 175, 55, 0.4)"/>
+            </svg>
+        </div>
+        <h2 class="font-['Cinzel'] tracking-[4px] text-goldPrimary text-sm mb-2">THE NEXT CHAPTER</h2>
+        <p class="font-sans text-xs tracking-[1px] text-lightgray animate-pulse">Loading...</p>
+    </div>
+
+    <!-- CORE MUSEUM CONTENT WRAPPER -->
+    <div id="gallery-wrapper" class="velvet-walls">
+        
+        <!-- =========================================
+             WELCOME HEADER (Pintu Masuk Utama)
+             ========================================= -->
+        <header id="welcome-header" class="relative h-screen flex flex-col items-center justify-center text-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent pointer-events-none"></div>
+            <div class="relative z-10 container mx-auto px-6 max-w-4xl">
+                <p class="font-['Cinzel'] text-[#D4AF37] tracking-[6px] uppercase text-xs md:text-sm mb-4">A Cinematic Graduation Experience</p>
+                <h1 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-[#F8F4EC] tracking-widest mb-4">
+                    THE NEXT CHAPTER
+                </h1>
+                
+                <p class="font-serif italic text-neutral-300 text-sm md:text-base max-w-xl mx-auto mb-10">
+                    Congratulations,
+                </p>
+
+                <!-- SVG Handwriting Animation for KEYLA -->
+                <div class="w-full max-w-[320px] mx-auto mb-10 h-16 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" class="w-full h-full">
+                        <!-- Path representation of written cursive "Keyla" -->
+                        <path class="stroke-name" d="M20,45 C25,20 28,10 32,5 L22,12 C18,18 20,40 28,45 L35,28 C38,15 48,15 45,28 C42,42 58,45 65,30 L55,38 Q68,48 78,35 C88,20 75,5 68,15 C60,25 78,45 88,40 L98,15 Q95,45 105,45 C115,45 120,30 115,22 C110,15 100,25 108,38 C115,48 135,42 145,20" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <p class="font-sans text-xs tracking-[8px] text-lightgray uppercase mb-12">TODAY IS YOUR DAY.</p>
+
+                <button class="gold-plaque-btn" id="gate-btn">
+                    Open the Exhibition <i class="fa-solid fa-crown ml-1"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN EXHIBITION FLOW -->
+        <main class="py-16">
+
+            <!-- ACT I: CINEMATIC TRANSITION -->
+            <section class="h-[60vh] flex flex-col items-center justify-center text-center relative z-10 py-12">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-72 h-72 bg-goldPrimary/5 rounded-full filter blur-[100px] z-0"></div>
+                </div>
+                <div class="relative z-10">
+                    <p class="font-['Cinzel'] text-xs tracking-[4px] text-goldPrimary mb-3">ACT I</p>
+                    <h2 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-softwhite tracking-wider mb-4 text-glow-gold">
+                        Graduation Day
+                    </h2>
+                    <p class="font-serif italic text-lightgray text-sm md:text-base">A day worth remembering.</p>
+                </div>
+            </section>
+
+            <!-- ACT I: GRADUATION ATMOSPHERE -->
+            <section id="act-i-content" class="museum-spotlight py-16 relative">
+                <div class="container mx-auto px-6 max-w-4xl text-center">
+                    <p class="font-['Cinzel'] text-goldPrimary text-sm tracking-[5px] uppercase mb-4">June 2026</p>
+                    <p class="font-serif italic text-neutral-300 text-lg mb-8">A day worth remembering.</p>
+                    <p class="font-['Cinzel'] text-neutral-400 text-xs tracking-[4px] uppercase mb-12">Congratulations,</p>
+                    <h3 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-softwhite leading-relaxed tracking-widest text-glow-gold mb-12">
+                        Keyla Safa Nur Zahira Hermawan
+                    </h3>
+                </div>
+            </section>
+
+            <!-- BOUQUET SECTION -->
+            <section id="bouquet-section" class="py-24 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-[#111827] via-transparent to-transparent pointer-events-none"></div>
+                
+                <div class="container mx-auto px-6 max-w-4xl text-center flex flex-col items-center relative z-10">
+                    <div class="w-full max-w-[280px] md:max-w-md mb-12 overflow-visible drop-shadow-[0_0_40px_rgba(212,175,55,0.3)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 550" class="w-full h-full">
+                            <path d="M110,380 L200,480 L290,380 L390,200 L200,300 L10,200 Z" fill="#EADCC9" opacity="0.9"/>
+                            <g stroke="#3D502E" stroke-width="4">
+                                <line x1="200" y1="330" x2="175" y2="460" />
+                                <line x1="200" y1="330" x2="200" y2="475" />
+                                <line x1="200" y1="330" x2="225" y2="460" />
+                            </g>
+                            <path d="M160,390 Q200,410 240,390 Q250,460 200,435 Q150,460 160,390 Z" fill="#D4AF37"/>
+                            <circle cx="200" cy="400" r="8" fill="#FFF"/>
+                            <circle cx="200" cy="200" r="90" fill="url(#flower-glow)" opacity="0.15"/>
+                            <g transform="translate(150, 210)">
+                                <circle cx="0" cy="0" r="32" fill="#F8D7E3"/>
+                                <path d="M-15,-10 C-5,-25 15,-25 25,-10 C30,15 -10,30 -25,10 Z" fill="#F497B1" opacity="0.8"/>
+                                <path d="M-10,-5 C0,-15 10,-15 15,-5 C20,10 -5,20 -15,5 Z" fill="#E05275"/>
+                            </g>
+                            <g transform="translate(255, 210)">
+                                <circle cx="0" cy="0" r="32" fill="#F8D7E3"/>
+                                <path d="M-15,-10 C-5,-25 15,-25 25,-10 C30,15 -10,30 -25,10 Z" fill="#F497B1" opacity="0.8"/>
+                                <path d="M-10,-5 C0,-15 10,-15 15,-5 C20,10 -5,20 -15,5 Z" fill="#E05275"/>
+                            </g>
+                            <g transform="translate(200, 250)">
+                                <circle cx="0" cy="0" r="36" fill="#FFFDF9"/>
+                                <path d="M-15,-10 C-5,-25 15,-25 25,-10 C30,15 -10,30 -25,10 Z" fill="#EAE5D9" opacity="0.8"/>
+                                <path d="M-10,-5 C0,-15 10,-15 15,-5 C20,10 -5,20 -15,5 Z" fill="#C5A059"/>
+                            </g>
+                            <g transform="translate(200, 160)">
+                                <circle cx="0" cy="0" r="36" fill="#FFFDF9"/>
+                                <path d="M-15,-10 C-5,-25 15,-25 25,-10 C30,15 -10,30 -25,10 Z" fill="#EAE5D9" opacity="0.8"/>
+                                <path d="M-10,-5 C0,-15 10,-15 15,-5 C20,10 -5,20 -15,5 Z" fill="#C5A059"/>
+                            </g>
+                            <g fill="#FFF">
+                                <circle cx="110" cy="160" r="4"/>
+                                <circle cx="120" cy="150" r="3"/>
+                                <circle cx="290" cy="160" r="4"/>
+                                <circle cx="280" cy="150" r="3"/>
+                                <circle cx="200" cy="110" r="4"/>
+                                <circle cx="150" cy="270" r="3"/>
+                                <circle cx="250" cy="270" r="3"/>
+                            </g>
+                            <g fill="#D4AF37">
+                                <circle cx="115" cy="165" r="2"/>
+                                <circle cx="285" cy="165" r="2"/>
+                                <circle cx="195" cy="115" r="2"/>
+                            </g>
+                            <path d="M110,380 L200,480 L290,380 L350,230 Q200,350 50,230 Z" fill="#FAF6F0" opacity="0.95"/>
+                        </svg>
+                    </div>
+
+                    <p class="font-serif text-lg md:text-2xl text-softwhite leading-relaxed mb-6 max-w-xl">
+                        Untuk seseorang yang berhasil sampai di hari ini.
+                    </p>
+                    <p class="font-sans text-goldPrimary tracking-[4px] uppercase text-sm mb-12">
+                        Selamat atas kelulusanmu.
+                    </p>
+                </div>
+            </section>
+
+            <!-- CELEBRATION SECTION -->
+            <section id="celebration-section" class="py-20 relative">
+                <div class="container mx-auto px-6 max-w-4xl text-center flex flex-col items-center">
+                    <div class="w-32 h-32 mb-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-full h-full drop-shadow-[0_0_20px_rgba(212,175,55,0.25)]">
+                            <polygon points="100,40 180,75 100,110 20,75" fill="#D4AF37"/>
+                            <polygon points="100,48 168,75 100,102 32,75" fill="#0B1220"/>
+                            <path d="M60,90 L60,130 C60,150 140,150 140,130 L140,90" fill="#0B1220" stroke="#D4AF37" stroke-width="4"/>
+                            <path d="M100,75 L150,115 L150,140" fill="none" stroke="#D4AF37" stroke-width="4"/>
+                            <polygon points="145,140 155,140 150,155" fill="#D4AF37"/>
+                        </svg>
+                    </div>
+
+                    <p class="font-serif text-2xl md:text-4xl text-softwhite leading-relaxed mb-6 max-w-2xl">
+                        Hari ini adalah bukti bahwa semua usaha kamu tidak sia-sia.
+                    </p>
+                    <p class="font-sans text-goldPrimary text-sm tracking-[4px] uppercase">
+                        Kamu berhasil sampai di titik ini.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ACT II: CINEMATIC TRANSITION -->
+            <section class="h-[60vh] flex flex-col items-center justify-center text-center relative z-10 py-12">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-72 h-72 bg-goldPrimary/5 rounded-full filter blur-[100px] z-0"></div>
+                </div>
+                <div class="relative z-10">
+                    <p class="font-['Cinzel'] text-xs tracking-[4px] text-goldPrimary mb-3">ACT II</p>
+                    <h2 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-softwhite tracking-wider mb-4 text-glow-gold">
+                        The Girl I'm Proud Of
+                    </h2>
+                    <p class="font-serif italic text-lightgray text-sm md:text-base">A journey worth looking back.</p>
+                </div>
+            </section>
+
+            <!-- ACT II: STORYTELLING PARAGRAPHS -->
+            <section id="proud-section" class="py-24 relative overflow-hidden">
+                <div id="proud-overlay" class="absolute inset-0 bg-black/0 transition-all duration-1000 pointer-events-none z-0"></div>
+
+                <div class="container mx-auto max-w-3xl relative z-10 text-center">
+                    <h2 class="font-['Cinzel'] text-xs tracking-[5px] text-goldPrimary mb-16">The Chronicle of You</h2>
+                    
+                    <div class="flex flex-col gap-12 text-xl md:text-3xl text-lightgray font-serif">
+                        <p class="proud-item opacity-0 transition-opacity duration-1000">"Aku bangga karena kamu tetap bertahan."</p>
+                        <p class="proud-item opacity-0 transition-opacity duration-1000">"Aku bangga karena kamu terus berusaha."</p>
+                        <p class="proud-item opacity-0 transition-opacity duration-1000">"Aku bangga karena kamu berhasil sampai di sini."</p>
+                        <p class="proud-item opacity-0 transition-opacity duration-1000">"Aku bangga karena kamu tidak menyerah."</p>
+                    </div>
+
+                    <div id="proud-conclusion" class="mt-20 opacity-0 transition-all duration-1000 transform scale-95">
+                        <p class="font-sans text-xs tracking-[8px] text-goldPrimary uppercase mb-6">Dan yang paling penting...</p>
+                        <h3 class="font-['Cinzel'] text-3xl md:text-6xl text-softwhite font-black tracking-widest text-glow-gold leading-snug">
+                            AKU BANGGA KARENA KAMU ADALAH KEYLA.
+                        </h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CERTIFICATE OF PRIDE -->
+            <section id="certificate-section" class="py-24 relative z-10">
+                <div class="container mx-auto px-6 max-w-3xl">
+                    <div class="luxury-card rounded-xl p-8 md:p-12 border-2 border-goldPrimary/40 relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-goldPrimary/5 to-transparent pointer-events-none rounded-xl"></div>
+                        
+                        <div class="w-16 h-16 mx-auto mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#D4AF37" stroke-width="4"/>
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="4,4"/>
+                                <polygon points="50,22 55,37 71,37 58,47 62,62 50,53 38,62 42,47 29,37 45,37" fill="#D4AF37"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="font-['Cinzel'] text-center text-2xl md:text-3xl tracking-widest text-goldPrimary mb-2">Certificate Of Pride</h3>
+                        <p class="font-sans text-center text-xs tracking-[2px] text-lightgray uppercase mb-12">Awarded with infinite affection</p>
+
+                        <div class="text-center mb-12">
+                            <p class="font-serif text-sm italic text-neutral-400 mb-2">Proudly presented to:</p>
+                            <h4 class="font-['Cinzel'] font-bold text-xl md:text-3xl text-softwhite tracking-wider text-glow-gold">
+                                Keyla Safa Nur Zahira Hermawan
+                            </h4>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6 max-w-md mx-auto text-center font-sans text-xs tracking-widest uppercase">
+                            <div class="p-3 border border-goldPrimary/20 rounded bg-navyDark/30">🏆 Perseverance</div>
+                            <div class="p-3 border border-goldPrimary/20 rounded bg-navyDark/30">⚡ Hard Work</div>
+                            <div class="p-3 border border-goldPrimary/20 rounded bg-navyDark/30">🌿 Dedication</div>
+                            <div class="p-3 border border-goldPrimary/20 rounded bg-navyDark/30">💎 Never Giving Up</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACT III: CINEMATIC TRANSITION -->
+            <section class="h-[60vh] flex flex-col items-center justify-center text-center relative z-10 py-12">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-72 h-72 bg-goldPrimary/5 rounded-full filter blur-[100px] z-0"></div>
+                </div>
+                <div class="relative z-10">
+                    <p class="font-['Cinzel'] text-xs tracking-[4px] text-goldPrimary mb-3">ACT III</p>
+                    <h2 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-softwhite tracking-wider mb-4 text-glow-gold">
+                        The Next Chapter
+                    </h2>
+                    <p class="font-serif italic text-lightgray text-sm md:text-base">An overview of the timeline ahead.</p>
+                </div>
+            </section>
+
+            <!-- ACT III: INTERACTIVE TIMELINE -->
+            <section id="timeline-section" class="py-24 relative z-10">
+                <div class="container mx-auto max-w-4xl">
+                    <div class="relative max-w-lg mx-auto py-10 px-4">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[2px] bg-neutral-800">
+                            <div id="timeline-line" class="timeline-progress-line w-full bg-goldPrimary"></div>
+                        </div>
+
+                        <!-- Node 1 -->
+                        <div class="relative flex items-center justify-between mb-16 timeline-node">
+                            <div class="w-5/12 text-right pr-6 font-['Cinzel'] text-sm md:text-lg text-softwhite">📚 SMP</div>
+                            <div class="w-8 h-8 rounded-full bg-navyDark border-2 border-goldPrimary flex items-center justify-center z-10 font-bold text-goldPrimary text-xs">1</div>
+                            <div class="w-5/12 text-left pl-6 text-xs md:text-sm text-neutral-400">Gerbang awal perjuanganmu yang penuh memori.</div>
+                        </div>
+
+                        <!-- Node 2 -->
+                        <div class="relative flex items-center justify-between mb-16 timeline-node">
+                            <div class="w-5/12 text-right pr-6 font-['Cinzel'] text-sm md:text-lg text-softwhite">🎓 Graduation</div>
+                            <div class="w-8 h-8 rounded-full bg-navyDark border-2 border-goldPrimary flex items-center justify-center z-10 font-bold text-goldPrimary text-xs">2</div>
+                            <div class="w-5/12 text-left pl-6 text-xs md:text-sm text-neutral-400">Puncak kemenangan atas semua hari-hari lelahmu.</div>
+                        </div>
+
+                        <!-- Node 3 -->
+                        <div class="relative flex items-center justify-between mb-16 timeline-node">
+                            <div class="w-5/12 text-right pr-6 font-['Cinzel'] text-sm md:text-lg text-softwhite">🏫 SMA Baru</div>
+                            <div class="w-8 h-8 rounded-full bg-navyDark border-2 border-goldPrimary flex items-center justify-center z-10 font-bold text-goldPrimary text-xs">3</div>
+                            <div class="w-5/12 text-left pl-6 text-xs md:text-sm text-neutral-400">Lembaran kosong yang siap kamu lukis kembali.</div>
+                        </div>
+
+                        <!-- Node 4 -->
+                        <div class="relative flex items-center justify-between timeline-node">
+                            <div class="w-5/12 text-right pr-6 font-['Cinzel'] text-sm md:text-lg text-softwhite">✨ Masa Depan</div>
+                            <div class="w-8 h-8 rounded-full bg-navyDark border-2 border-goldPrimary flex items-center justify-center z-10 font-bold text-goldPrimary text-xs">4</div>
+                            <div class="w-5/12 text-left pl-6 text-xs md:text-sm text-neutral-400">Tempat seluruh mimpimu menanti untuk digapai.</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-20 max-w-2xl mx-auto">
+                        <p class="font-serif text-xl md:text-2xl text-softwhite mb-3">
+                            Hari ini bukan akhir perjalananmu.
+                        </p>
+                        <p class="font-sans text-goldPrimary text-xs tracking-[2px] uppercase">
+                            Ini adalah awal dari cerita yang baru.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MESSAGES FOR YOU -->
+            <section id="messages-section" class="py-24 relative z-10">
+                <div class="container mx-auto max-w-4xl px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="font-['Cinzel'] text-2xl md:text-3xl text-goldPrimary tracking-widest mb-2">Messages For You</h2>
+                        <p class="font-sans text-neutral-400 text-xs tracking-[3px] uppercase">Ketuk plakat untuk membuka pesan kurator</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 max-w-xl mx-auto">
+                        <button class="memory-star-btn luxury-card p-6 rounded-xl flex flex-col items-center justify-center gap-3 transition-all duration-300" data-msg="Kamu hebat. ✨">
+                            <span class="text-xl text-neutral-600 pointer-events-none"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-[10px] tracking-widest text-neutral-500 pointer-events-none uppercase">Placard I</span>
+                        </button>
+                        <button class="memory-star-btn luxury-card p-6 rounded-xl flex flex-col items-center justify-center gap-3 transition-all duration-300" data-msg="Aku bangga sama adik. 🤍">
+                            <span class="text-xl text-neutral-600 pointer-events-none"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-[10px] tracking-widest text-neutral-500 pointer-events-none uppercase">Placard II</span>
+                        </button>
+                        <button class="memory-star-btn luxury-card p-6 rounded-xl flex flex-col items-center justify-center gap-3 transition-all duration-300" data-msg="Terima kasih sudah bertahan. 🌹">
+                            <span class="text-xl text-neutral-600 pointer-events-none"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-[10px] tracking-widest text-neutral-500 pointer-events-none uppercase">Placard III</span>
+                        </button>
+                        <button class="memory-star-btn luxury-card p-6 rounded-xl flex flex-col items-center justify-center gap-3 transition-all duration-300" data-msg="Jangan takut sama masa depan. 🕯️">
+                            <span class="text-xl text-neutral-600 pointer-events-none"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-[10px] tracking-widest text-neutral-500 pointer-events-none uppercase">Placard IV</span>
+                        </button>
+                        <button class="memory-star-btn luxury-card p-6 rounded-xl flex flex-col items-center justify-center gap-3 transition-all duration-300" data-msg="Semua akan baik-baik saja. 🍀">
+                            <span class="text-xl text-neutral-600 pointer-events-none"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-[10px] tracking-widest text-neutral-500 pointer-events-none uppercase">Placard V</span>
+                        </button>
+                        <button class="memory-star-btn luxury-card p-6 rounded-xl flex flex-col items-center justify-center gap-3 transition-all duration-300" data-msg="Aku akan selalu mendukungmu. ⭐">
+                            <span class="text-xl text-neutral-600 pointer-events-none"><i class="fa-solid fa-star"></i></span>
+                            <span class="text-[10px] tracking-widest text-neutral-500 pointer-events-none uppercase">Placard VI</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STAR POPUP MODAL -->
+            <div id="star-modal" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/75 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+                <div class="luxury-card max-w-sm w-11/12 p-8 rounded-xl text-center scale-95 transition-transform duration-300" id="star-modal-content">
+                    <div class="text-goldPrimary text-4xl mb-4"><i class="fa-solid fa-crown animate-pulse"></i></div>
+                    <p id="star-message" class="font-serif text-lg text-softwhite leading-relaxed mb-6"></p>
+                    <button id="close-star-modal" class="border border-goldPrimary text-goldPrimary font-sans px-6 py-2 rounded-full text-xs uppercase tracking-widest hover:bg-goldPrimary hover:text-navyDark transition-colors">Tutup</button>
+                </div>
+            </div>
+
+            <!-- ACT IV: CINEMATIC TRANSITION -->
+            <section class="h-[60vh] flex flex-col items-center justify-center text-center relative z-10 py-12">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-72 h-72 bg-goldPrimary/5 rounded-full filter blur-[100px] z-0"></div>
+                </div>
+                <div class="relative z-10">
+                    <p class="font-['Cinzel'] text-xs tracking-[4px] text-goldPrimary mb-3">ACT IV</p>
+                    <h2 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-softwhite tracking-wider mb-4 text-glow-gold">
+                        A Letter For Keyla
+                    </h2>
+                    <p class="font-serif italic text-lightgray text-sm md:text-base">Unfolding a curated secret message.</p>
+                </div>
+            </section>
+
+            <!-- ACT IV: ENVELOPE GATE -->
+            <section id="act-iv-content" class="py-16 relative">
+                <div class="container mx-auto px-6 text-center flex flex-col items-center relative z-10">
+                    <p class="font-serif text-xl md:text-2xl text-neutral-400 mb-4">Sebelum halaman terakhir...</p>
+                    <p class="font-sans text-goldPrimary text-xs tracking-[4px] uppercase mb-12">Ada satu hal yang ingin aku sampaikan.</p>
+                    
+                    <div class="envelope-container mb-6" id="curator-envelope">
+                        <div class="envelope-flap"></div>
+                        <div class="envelope-front"></div>
+                        <div class="wax-seal">K</div>
+                        <div class="letter-paper text-left">
+                            <div class="letter-content flex flex-col justify-between h-full">
+                                <h4 class="font-['Cinzel'] text-xs font-bold text-[#4A0E17]">To: Keyla Safa Nur Zahira</h4>
+                                <p class="font-sans text-[11px] text-neutral-600 leading-tight">Membuka pesan kurator...</p>
+                                <div class="text-right text-[10px] text-neutral-400">- Kyy</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="envelope-hint text-xs tracking-wider text-neutral-500 mt-4 uppercase">Klik Wax Seal untuk Membuka Surat</p>
+
+                    <!-- Letter Reveal Target Section -->
+                    <div id="letter-reveal-zone" class="w-full max-w-2xl mt-24 hidden opacity-0 transition-opacity duration-1000">
+                        <div class="bg-[#FAF8F5] text-neutral-800 p-8 md:p-12 rounded-lg border border-neutral-300 shadow-[0_25px_60px_rgba(0,0,0,0.6)] w-full text-left">
+                            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#8B0000] to-transparent"></div>
+                            
+                            <h3 class="font-['Cinzel'] text-goldPrimary text-sm tracking-widest border-b border-neutral-200 pb-3 mb-6">A Message From Earth</h3>
+                            
+                            <!-- EXACT Letter Content from HTML -->
+                            <div class="font-serif text-sm md:text-base leading-relaxed text-neutral-700 flex flex-col gap-6" id="typewriter-content">
+                                <p class="letter-p opacity-0 transition-opacity duration-1000" id="letter-first-line">Untuk Keyla Safa Nur Zahira Hermawan, selamat atas kelulusanmu.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Hari ini aku benar benar bangga sama kamu, bukan cuma karena kamu berhasil lulus di jenjang ini, tapi karena aku tahu perjalanan yang kamu lewati untuk sampai di titik ini.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Aku tahu mungkin tidak semua harinya mudah, ada hari dimana kamu lelah, sedih, kecewa, atau ingin menyerah, tapi nyatanya kamu tetap bertahan dan berhasil sampai di sini.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Jujur, hari ini aku bahagia banget melihat kamu mencapai salah satu langkah penting dalam hidupmu.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Tapi kalau aku boleh jujur, selain bahagia aku juga sedikit sedih karena aku tahu setelah ini kamu akan memulai babak baru, bertemu lingkungan baru, teman baru, dan menjalani kehidupan yang berbeda dari sekarang.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Kadang aku kepikiran apakah nanti kita masih bisa menghabiskan waktu sebanyak sekarang, masih bisa bercerita sesering sekarang, dan masih bisa membuat kenangan seperti yang selama ini kita lakukan.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Tapi di saat yang sama aku sadar kalau aku tidak boleh takut melihat kamu tumbuh.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Aku ingin kamu berkembang, aku ingin kamu meraih semua mimpi yang kamu punya, dan aku ingin kamu menjadi seseorang yang selalu kamu impikan.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Jadi pergilah dan kejar semua hal baik yang menunggumu di depan sana, karena kamu pantas mendapatkannya.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Dan kalau suatu hari nanti kamu merasa lelah, ragu, atau sendirian, aku harap kamu ingat bahwa akan selalu ada seseorang yang bangga padamu, mendoakanmu, dan berharap yang terbaik untukmu.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000">Sekali lagi, selamat atas kelulusanmu.</p>
+                                <p class="letter-p opacity-0 transition-opacity duration-1000 font-bold text-neutral-800">Aku bangga sama kamu, sangat bangga.</p>
+
+                                <div class="mt-8 border-t border-neutral-200 pt-6 flex flex-col items-end">
+                                    <p class="text-xs text-neutral-400 uppercase tracking-widest mb-1">Dengan bangga,</p>
+                                    <p class="font-cursive text-3xl text-[#8B0000] h-10 select-none">Kyy</p>
+                                </div>
+
+                                <div class="mt-8 pt-4 text-center border-t border-neutral-100">
+                                    <p class="text-xs tracking-wider text-neutral-400 uppercase mb-1">End of Letter.</p>
+                                    <p class="font-sans text-[10px] text-neutral-400 uppercase tracking-[4px]">But not the end of your story.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACT V: CINEMATIC TRANSITION -->
+            <section class="h-[60vh] flex flex-col items-center justify-center text-center relative z-10 py-12">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-72 h-72 bg-goldPrimary/5 rounded-full filter blur-[100px] z-0"></div>
+                </div>
+                <div class="relative z-10">
+                    <p class="font-['Cinzel'] text-xs tracking-[4px] text-goldPrimary mb-3">ACT V</p>
+                    <h2 class="font-['Cinzel'] font-bold text-3xl md:text-5xl text-softwhite tracking-wider mb-4 text-glow-gold">
+                        Your Graduation Gift
+                    </h2>
+                    <p class="font-serif italic text-lightgray text-sm md:text-base">Unveiling a royal digital prize.</p>
+                </div>
+            </section>
+
+            <!-- ACT V: DIGITAL GIFT BOX -->
+            <section id="act-v-content" class="py-16 relative">
+                <div class="container mx-auto px-6 text-center flex flex-col items-center relative z-10">
+                    <div id="interactive-gift" class="gift-box-container w-48 h-48 mx-auto mb-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-full h-full">
+                            <rect x="40" y="80" width="120" height="100" fill="#F8FAFC" rx="5"/>
+                            <rect x="95" y="80" width="10" height="100" fill="#D4AF37"/>
+                            <rect x="40" y="125" width="120" height="10" fill="#D4AF37"/>
+                            <rect x="35" y="60" width="130" height="25" fill="#FAF6F0" rx="3" class="gift-lid-svg"/>
+                            <rect x="95" y="60" width="10" height="25" fill="#D4AF37" class="gift-lid-svg"/>
+                            <g class="gift-lid-svg" transform="translate(100, 60)">
+                                <path d="M-20,-15 Q-10,-30 0,-15 Q10,-30 20,-15 Q0,-5 -20,-15 Z" fill="#D4AF37"/>
+                                <circle cx="0" cy="-15" r="8" fill="#F8FAFC"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <h4 class="font-['Cinzel'] text-goldPrimary tracking-[4px] uppercase text-sm mb-12">
+                        Hadiah Kelulusan Untuk Adik
+                    </h4>
+
+                    <div id="gift-reveal" class="opacity-0 scale-75 transition-all duration-700 pointer-events-none">
+                        <a href="https://YOUR-LINK-HERE.COM" target="_blank" class="bg-gradient-to-r from-goldPrimary to-yellow-300 text-navyDark font-sans font-bold px-10 py-3 rounded-full uppercase tracking-widest text-xs shadow-lg inline-flex items-center gap-2 transform hover:-translate-y-1 transition-all duration-300 border-2 border-goldPrimary/40">
+                            Open Your Gift <i class="fa-solid fa-sparkles animate-pulse"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EPILOGUE: THE BEGINNING -->
+            <section id="epilogue-section" class="min-h-screen py-24 relative z-10 text-center flex flex-col justify-center">
+                <div class="container mx-auto max-w-4xl px-6">
+                    <h2 class="epilogue-text font-['Cinzel'] text-2xl md:text-5xl text-goldPrimary tracking-widest mb-6 opacity-0 transition-opacity duration-[1.2s]">
+                        Congratulations, Graduate.
+                    </h2>
+                    <p class="epilogue-text font-serif italic text-neutral-300 text-lg mb-12 opacity-0 transition-opacity duration-[1.2s]">
+                        Aku bangga sama kamu. Sangat bangga.
+                    </p>
+                    <p class="epilogue-text font-['Cinzel'] text-sm tracking-[6px] text-lightgray uppercase mb-16 opacity-0 transition-opacity duration-[1.2s]">
+                        And this is only the beginning.
+                    </p>
+                    <p class="epilogue-text font-sans text-xs tracking-widest text-neutral-500 uppercase mb-2 opacity-0 transition-opacity duration-[1.2s]">
+                        For Keyla Safa Nur Zahira Hermawan — June 2026
+                    </p>
+                    <p class="epilogue-text font-sans text-[10px] tracking-widest text-neutral-500 uppercase opacity-0 transition-opacity duration-[1.2s]">
+                        Thank you for letting me be part of your journey.
+                    </p>
+                    <div class="mt-20 border-t border-goldPrimary/10 pt-8">
+                        <p class="font-sans text-[10px] tracking-widest text-neutral-600 uppercase">Made with love for Keyla ⭐</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- JAVASCRIPT SYSTEM CONTROLLER (Aman, Tanpa Timing Bugs / Selector Crash) -->
+    <script>
+        // DOM ELEMENTS & CANVAS INITIATOR
+        const skyCanvas = document.getElementById('cosmic-canvas');
+        const ctx = skyCanvas ? skyCanvas.getContext('2d') : null;
+
+        const preloader = document.getElementById('preloader-screen');
+        const gate = document.getElementById('welcome-header');
+        const wrapper = document.getElementById('gallery-wrapper');
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        const gateBtn = document.getElementById('gate-btn');
+        const envelope = document.getElementById('curator-envelope');
+        const starModal = document.getElementById('star-modal');
+        const starModalContent = document.getElementById('star-modal-content');
+        const starMessage = document.getElementById('star-message');
+        const closeStarBtn = document.getElementById('close-star-modal');
+        const memoryStars = document.querySelectorAll('.memory-star-btn');
+        const interactiveGift = document.getElementById('interactive-gift');
+        const giftReveal = document.getElementById('gift-reveal');
+        const timelineLine = document.getElementById('timeline-line');
+        const scrollProgress = document.getElementById('scroll-progress');
+        const proudItems = document.querySelectorAll('.proud-item');
+        const proudOverlay = document.getElementById('proud-overlay');
+        const proudConclusion = document.getElementById('proud-conclusion');
+        const epilogueTexts = document.querySelectorAll('.epilogue-text');
+
+        let musicStarted = false;
+        const DEFAULT_VOLUME = 0.35;
+        let finalLetterTriggered = false;
+
+        // FADE AUDIO IN
+        function fadeInAudio(audio, targetVolume, durationMs) {
+            audio.volume = 0;
+            audio.play();
+            const interval = 50;
+            const step = targetVolume / (durationMs / interval);
+            const fade = setInterval(() => {
+                if (audio.volume < targetVolume) {
+                    audio.volume = Math.min(targetVolume, audio.volume + step);
+                } else {
+                    clearInterval(fade);
+                }
+            }, interval);
+        }
+
+        // FADE AUDIO OUT
+        function fadeOutAudio(audio, durationMs) {
+            const interval = 50;
+            const step = audio.volume / (durationMs / interval);
+            const fade = setInterval(() => {
+                if (audio.volume > 0.02) {
+                    audio.volume = Math.max(0, audio.volume - step);
+                } else {
+                    audio.pause();
+                    clearInterval(fade);
+                }
+            }, interval);
+        }
+
+        // TOGGLE PLAY/PAUSE MUSIC
+        function toggleMusic() {
+            if (!music || !musicBtn) return;
+            if (music.paused) {
+                music.play();
+                musicBtn.classList.add('playing');
+            } else {
+                music.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        if (musicBtn) {
+            musicBtn.addEventListener('click', toggleMusic);
+        }
+
+        // OPEN GATE
+        function openMuseum() {
+            if (!gate || !wrapper) return;
+            gate.classList.add('opened');
+            if (music) {
+                fadeInAudio(music, DEFAULT_VOLUME, 3000);
+                musicStarted = true;
+                if (musicBtn) musicBtn.classList.remove('hidden');
+                if (musicBtn) musicBtn.classList.add('playing');
+            }
+            setTimeout(() => {
+                gate.style.display = 'none';
+                wrapper.classList.add('visible');
+                document.body.classList.remove('overflow-hidden');
+            }, 1800);
+        }
+
+        // LETTER REVEAL DELEGATOR (Shake, Crack, Rise, Typewriter)
+        function openLetter() {
+            if (finalLetterTriggered) return;
+            finalLetterTriggered = true;
+
+            const waxSeal = document.querySelector('.wax-seal');
+            if (waxSeal) {
+                // 1. Seal shakes
+                waxSeal.classList.add('seal-shaking');
+                
+                setTimeout(() => {
+                    waxSeal.classList.remove('seal-shaking');
+                    // 2. Envelope opens
+                    envelope.classList.add('opened');
+
+                    // 3. Reveal and start typing
+                    setTimeout(() => {
+                        const revealZone = document.getElementById('letter-reveal-zone');
+                        if (revealZone) {
+                            revealZone.classList.remove('hidden');
+                            setTimeout(() => {
+                                revealZone.classList.add('opacity-100');
+                                startTypewriterEffect();
+                            }, 50);
+                        }
+                    }, 1200);
+                }, 1000);
+            }
+        }
+
+        function startTypewriterEffect() {
+            const firstLine = document.getElementById('letter-first-line');
+            const originalText = firstLine.textContent;
+            firstLine.textContent = "";
+            firstLine.classList.add('typewriter-cursor');
+            firstLine.classList.replace('opacity-0', 'opacity-100');
+
+            let i = 0;
+            function type() {
+                if (i < originalText.length) {
+                    firstLine.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(type, 30);
+                } else {
+                    firstLine.classList.remove('typewriter-cursor');
+                    revealRemainingParagraphs();
+                }
+            }
+            type();
+        }
+
+        function revealRemainingParagraphs() {
+            const remainingP = document.querySelectorAll('.letter-p:not(#letter-first-line)');
+            remainingP.forEach((p, idx) => {
+                setTimeout(() => {
+                    p.classList.replace('opacity-0', 'opacity-100');
+                }, idx * 1200);
+            });
+        }
+
+        if (envelope) {
+            envelope.addEventListener('click', openLetter);
+        }
+
+        // ACCORDION
+        function toggleAccordion(element) {
+            const parent = element.parentElement;
+            const content = parent.querySelector('.acc-content');
+            const isActive = parent.classList.contains('active');
+
+            document.querySelectorAll('.acc-item').forEach(item => {
+                item.classList.remove('active');
+                const innerContent = item.querySelector('.acc-content');
+                if (innerContent) innerContent.style.maxHeight = null;
+            });
+
+            if (!isActive && content) {
+                parent.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // POPUP MODALS FOR MEMORY CARDS
+        memoryStars.forEach(star => {
+            star.addEventListener('click', () => {
+                const msg = star.getAttribute('data-msg');
+                if (starMessage) starMessage.innerHTML = msg;
+                star.querySelector('span').style.color = '#D4AF37';
+                star.style.borderColor = 'rgba(212, 175, 55, 0.4)';
+                if (starModal && starModalContent) {
+                    starModal.classList.remove('pointer-events-none');
+                    starModal.classList.add('opacity-100');
+                    starModalContent.classList.remove('scale-95');
+                    starModalContent.classList.add('scale-100');
+                }
+            });
+        });
+
+        if (closeStarBtn) {
+            closeStarBtn.addEventListener('click', () => {
+                if (starModal && starModalContent) {
+                    starModal.classList.add('pointer-events-none');
+                    starModal.classList.remove('opacity-100');
+                    starModalContent.classList.add('scale-95');
+                    starModalContent.classList.remove('scale-100');
+                }
+            });
+        }
+
+        // GIFT UNLOCK & New Confetti Foil Drift Animation
+        if (interactiveGift) {
+            interactiveGift.addEventListener('click', function() {
+                if (this.classList.contains('opened')) return;
+                this.classList.add('opened');
+                triggerGiftConfetti();
+                setTimeout(() => {
+                    if (giftReveal) {
+                        giftReveal.classList.remove('pointer-events-none');
+                        giftReveal.classList.replace('opacity-0', 'opacity-100');
+                    }
+                }, 1000);
+            });
+        }
+
+        function triggerGiftConfetti() {
+            const colors = ['#D4AF37', '#FFD700', '#FAF8F5', '#8C6D1F', '#F8FAFC'];
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('gold-confetti');
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.top = `-10px`;
+                    
+                    const size = Math.random() * 8 + 4;
+                    confetti.style.width = `${size}px`;
+                    confetti.style.height = `${size}px`;
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // SCROLL REVEALS
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            if (scrollProgress) scrollProgress.style.width = scrolled + "%";
+
+            // Timeline line
+            const timelineSection = document.getElementById('timeline-section');
+            if (timelineSection && timelineLine) {
+                const rect = timelineSection.getBoundingClientRect();
+                const viewHeight = window.innerHeight;
+                if (rect.top < viewHeight && rect.bottom > 0) {
+                    const totalDist = viewHeight + rect.height;
+                    const traversed = viewHeight - rect.top;
+                    const percent = Math.min(100, Math.max(0, (traversed / totalDist) * 120));
+                    timelineLine.style.height = percent + "%";
+                }
+            }
+
+            // Proud items trigger
+            const proudSection = document.getElementById('proud-section');
+            if (proudSection) {
+                const rect = proudSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7) {
+                    proudItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = "1";
+                        }, index * 1000);
+                    });
+
+                    setTimeout(() => {
+                        if (proudOverlay) proudOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+                        setTimeout(() => {
+                            if (proudConclusion) {
+                                proudConclusion.classList.remove('scale-95');
+                                proudConclusion.classList.replace('opacity-0', 'opacity-100');
+                            }
+                        }, 1200);
+                    }, 4500);
+                }
+            }
+
+            // Epilogue reveals
+            const epilogueSection = document.getElementById('epilogue-section');
+            if (epilogueSection) {
+                const rect = epilogueSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.6) {
+                    epilogueTexts.forEach((text, index) => {
+                        setTimeout(() => {
+                            text.classList.replace('opacity-0', 'opacity-100');
+                        }, index * 1200);
+                    });
+                }
+            }
+        });
+
+        // AMBIENT COSMIC BACKGROUND
+        function initSpaceCanvas() {
+            if (!skyCanvas || !ctx) return;
+            let stars = [];
+
+            function resizeCanvas() {
+                skyCanvas.width = window.innerWidth;
+                skyCanvas.height = window.innerHeight;
+                initStars();
+            }
+
+            function initStars() {
+                stars = [];
+                const count = window.innerWidth < 768 ? 60 : 180;
+                for (let i = 0; i < count; i++) {
+                    stars.push({
+                        x: Math.random() * skyCanvas.width,
+                        y: Math.random() * skyCanvas.height,
+                        radius: Math.random() * 1.2,
+                        alpha: Math.random(),
+                        twinkleSpeed: Math.random() * 0.015 + 0.005,
+                        twinkling: Math.random() > 0.5
+                    });
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, skyCanvas.width, skyCanvas.height);
+                stars.forEach(star => {
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    if (star.twinkling) {
+                        star.alpha += star.twinkleSpeed;
+                        if (star.alpha >= 1 || star.alpha <= 0.15) star.twinkleSpeed = -star.twinkleSpeed;
+                    }
+                    ctx.fillStyle = `rgba(248, 244, 236, ${star.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            draw();
+        }
+
+        // BIND DELEGATES
+        function initBindings() {
+            if (gateBtn) gateBtn.addEventListener('click', openMuseum);
+            if (musicBtn) musicBtn.addEventListener('click', toggleMusic);
+
+            const accHeaders = document.querySelectorAll('.acc-header');
+            accHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    toggleAccordion(this);
+                });
+            });
+
+            initSpaceCanvas();
+
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.style.transition = "all 0.8s ease";
+                    preloader.style.opacity = "0";
+                    setTimeout(() => {
+                        preloader.style.display = "none";
+                    }, 800);
+                }
+            }, 2500);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initBindings);
+        } else {
+            initBindings();
+        }
+    </script>
+</body>
+</html>
